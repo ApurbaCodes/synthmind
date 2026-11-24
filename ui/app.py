@@ -26,147 +26,332 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# Custom CSS - The Aesthetic Overhaul
+# Custom CSS - Material 3 (M3) Design System
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
-/* ---- Import Google Fonts ---- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap');
+/* ---- Import Google Fonts & Material Symbols ---- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-/* ---- Global Typography & Theme ---- */
+:root {
+    /* M3 Dark Baseline Color Palette */
+    --md-surface: #141218;
+    --md-surface-dim: #110f14;
+    --md-surface-container-low: #1d1b20;
+    --md-surface-container: #211f26;
+    --md-surface-container-high: #2b2930;
+    --md-surface-container-highest: #36343b;
+    --md-on-surface: #e6e0e9;
+    --md-on-surface-variant: #cac4d0;
+    --md-outline: #79747e;
+    --md-outline-variant: rgba(121, 116, 126, 0.2);
+
+    /* M3 Primary (Electric Violet / Lavender) */
+    --md-primary: #d0bcff;
+    --md-on-primary: #381e72;
+    --md-primary-container: #3b2a59;
+    --md-on-primary-container: #eaddff;
+
+    /* M3 Secondary & Tertiary */
+    --md-secondary: #ccc2dc;
+    --md-secondary-container: #332d41;
+    --md-tertiary: #a8eff0;
+    --md-tertiary-container: #004f58;
+
+    /* M3 Shapes & Motion */
+    --md-shape-sm: 8px;
+    --md-shape-md: 16px;
+    --md-shape-lg: 24px;
+    --md-shape-full: 9999px;
+    --md-easing: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+}
+
+/* ---- Global Typography & Background ---- */
 html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    color: #e2e8f0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    color: var(--md-on-surface);
 }
 
-/* Background tweaks for deeper dark mode */
 .stApp, [data-testid="stAppViewContainer"] {
-    background-color: #0b0f19 !important;
-    background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, transparent 70%) !important;
+    background-color: var(--md-surface) !important;
+    background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79, 55, 139, 0.18), transparent 70%),
+        radial-gradient(circle at 10% 20%, rgba(0, 79, 88, 0.08), transparent 40%) !important;
 }
 
-/* ---- Custom Scrollbar ---- */
+/* ---- Smooth Scrollbar ---- */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 ::-webkit-scrollbar-track {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 10px;
+    background: var(--md-surface-container-highest);
+    border-radius: var(--md-shape-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #475569;
+    background: var(--md-outline);
 }
 
-/* ---- Header Styling ---- */
-.main-header {
-    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+/* ---- Material 3 Header Hero ---- */
+.m3-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--md-surface-container-high);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--md-shape-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--md-primary);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.m3-hero-badge .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background: #34d399;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #34d399;
+}
+
+.m3-main-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff 40%, var(--md-primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 2.75rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    letter-spacing: -1px;
-    text-align: center;
 }
 
-.sub-header {
-    color: #94a3b8;
+.m3-sub-title {
+    color: var(--md-on-surface-variant);
     font-size: 1rem;
     font-weight: 400;
     text-align: center;
-    margin-bottom: 3rem;
-    letter-spacing: 0.5px;
+    max-width: 580px;
+    margin: 0 auto 2.2rem auto;
+    line-height: 1.5;
 }
 
-/* ---- Chat Messages (Glassmorphism) ---- */
-.stChatMessage {
-    background: rgba(30, 41, 59, 0.4) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 1rem !important;
-    padding: 1.5rem !important;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.m3-chip-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 2.5rem;
 }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ---- Source Badges (Neon/Glow Effect) ---- */
-.source-badge {
+.m3-chip {
     display: inline-flex;
     align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: var(--md-shape-sm);
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline-variant);
+    color: var(--md-on-surface);
+}
+
+/* ---- Material 3 Chat Cards ---- */
+[data-testid="stChatMessage"] {
+    background: var(--md-surface-container) !important;
+    border: 1px solid var(--md-outline-variant) !important;
+    border-radius: var(--md-shape-lg) !important;
+    padding: 1.25rem 1.5rem !important;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+    transition: transform 0.2s var(--md-easing), box-shadow 0.2s var(--md-easing);
+}
+
+[data-testid="stChatMessage"]:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Target User Message bubble for distinct M3 Container styling */
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+    background: var(--md-primary-container) !important;
+    border: 1px solid rgba(208, 188, 255, 0.2) !important;
+    border-radius: 24px 24px 6px 24px !important;
+}
+
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+    border-radius: 24px 24px 24px 6px !important;
+}
+
+/* ---- M3 Filter & Assist Chips (Source Badges) ---- */
+.m3-source-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 4px 12px;
-    border-radius: 9999px;
-    font-size: 0.75rem;
+    border-radius: var(--md-shape-sm);
+    font-size: 0.72rem;
     font-weight: 600;
-    margin-right: 8px;
-    margin-top: 8px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    margin-right: 6px;
+    margin-top: 10px;
     text-transform: uppercase;
-    transition: all 0.2s ease;
+    transition: all 0.2s var(--md-easing);
 }
-.source-badge:hover {
+.m3-source-badge:hover {
     transform: translateY(-1px);
-    filter: brightness(1.2);
+    filter: brightness(1.15);
 }
 
-.badge-rag        { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 0 10px rgba(59, 130, 246, 0.1); }
-.badge-arxiv      { background: rgba(236, 72, 153, 0.1); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); box-shadow: 0 0 10px rgba(236, 72, 153, 0.1); }
-.badge-wikipedia  { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 0 10px rgba(16, 185, 129, 0.1); }
-.badge-tavily     { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); box-shadow: 0 0 10px rgba(245, 158, 11, 0.1); }
+.m3-badge-rag {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(147, 197, 253, 0.3);
+}
+.m3-badge-arxiv {
+    background: rgba(244, 114, 182, 0.15);
+    color: #f472b6;
+    border: 1px solid rgba(244, 114, 182, 0.3);
+}
+.m3-badge-wikipedia {
+    background: rgba(52, 211, 153, 0.15);
+    color: #6ee7b7;
+    border: 1px solid rgba(110, 231, 183, 0.3);
+}
+.m3-badge-tavily {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(252, 211, 77, 0.3);
+}
 
-/* ---- Health Indicators ---- */
-.health-ok   { color: #34d399; font-weight: 500; }
-.health-fail { color: #f87171; font-weight: 500; }
-
-/* ---- Sidebar Styling ---- */
+/* ---- M3 Sidebar / Navigation Drawer ---- */
 [data-testid="stSidebar"] {
-    background-color: rgba(15, 23, 42, 0.8) !important;
-    backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: var(--md-surface-container-low) !important;
+    border-right: 1px solid var(--md-outline-variant) !important;
 }
 
-/* ---- Chat Input Container tweaks ---- */
+.m3-sidebar-card {
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--md-shape-md);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+}
+
+.m3-card-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--md-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+}
+
+/* Status indicator rows in sidebar */
+.m3-status-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.84rem;
+    color: var(--md-on-surface);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.m3-status-item:last-child {
+    border-bottom: none;
+}
+.m3-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: var(--md-shape-full);
+}
+.m3-status-ok {
+    background: rgba(52, 211, 153, 0.12);
+    color: #34d399;
+}
+.m3-status-err {
+    background: rgba(248, 113, 113, 0.12);
+    color: #f87171;
+}
+
+/* ---- M3 Input Field ---- */
 [data-testid="stChatInput"] {
-    border-radius: 1rem !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    background: rgba(30, 41, 59, 0.7) !important;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    border-radius: var(--md-shape-full) !important;
+    border: 1px solid var(--md-outline-variant) !important;
+    background: var(--md-surface-container-high) !important;
+    padding: 4px 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28) !important;
+    transition: all 0.2s var(--md-easing);
 }
 
-/* ---- Buttons ---- */
+[data-testid="stChatInput"]:focus-within {
+    border-color: var(--md-primary) !important;
+    box-shadow: 0 0 0 2px rgba(208, 188, 255, 0.25), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ---- M3 Buttons ---- */
 div[data-testid="stButton"] > button {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #e2e8f0;
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-}
-div[data-testid="stButton"] > button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    transform: scale(1.02);
+    border-radius: var(--md-shape-full) !important;
+    background: var(--md-surface-container-high) !important;
+    border: 1px solid var(--md-outline-variant) !important;
+    color: var(--md-on-surface) !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.2px !important;
+    padding: 8px 18px !important;
+    transition: all 0.2s var(--md-easing) !important;
 }
 
-/* Special styling for the export button if we want to target it (using Streamlit types) */
-div[data-testid="stDownloadButton"] > button {
-    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
-    border: none;
-    color: white;
+div[data-testid="stButton"] > button:hover {
+    background: var(--md-surface-container-highest) !important;
+    border-color: var(--md-outline) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
 }
+
+/* Export Button (M3 Filled Primary Button) */
+div[data-testid="stDownloadButton"] > button {
+    border-radius: var(--md-shape-full) !important;
+    background: var(--md-primary) !important;
+    color: var(--md-on-primary) !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    border: none !important;
+    padding: 8px 18px !important;
+    transition: all 0.2s var(--md-easing) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
 div[data-testid="stDownloadButton"] > button:hover {
-    opacity: 0.9;
-    transform: scale(1.02);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(208, 188, 255, 0.3) !important;
+}
+
+/* ---- M3 File Uploader Container ---- */
+[data-testid="stFileUploader"] {
+    background: var(--md-surface-container) !important;
+    border: 1px dashed var(--md-outline) !important;
+    border-radius: var(--md-shape-md) !important;
+    padding: 10px !important;
+}
+
+/* Divider Styling */
+hr {
+    border-color: var(--md-outline-variant) !important;
+    margin: 1.25rem 0 !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -246,12 +431,26 @@ def _create_workflow():
 # ---------------------------------------------------------------------------
 def _render_sidebar(workflow) -> None:
     with st.sidebar:
-        st.markdown("### 🎛️ Control Panel")
-        st.markdown("<br>", unsafe_allow_html=True) # Adding a bit of breathing room
+        st.markdown(
+            """
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; margin-top: 0.5rem;">
+                <div style="background: var(--md-primary-container); color: var(--md-primary); width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; border: 1px solid rgba(208,188,255,0.25);">✨</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.05rem; color: #ffffff; letter-spacing: -0.2px;">SynthMind</div>
+                    <div style="font-size: 0.72rem; color: var(--md-on-surface-variant); text-transform: uppercase; letter-spacing: 0.5px;">Control Panel</div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-        # 1. File Uploader
-        st.markdown("#### 📄 Upload Document")
-        uploaded_file = st.file_uploader("Upload a file to the knowledge base", type=["pdf", "txt", "md"], label_visibility="collapsed")
+        # 1. File Uploader Card
+        st.markdown('<div class="m3-card-title">📚 Knowledge Base</div>', unsafe_allow_html=True)
+        uploaded_file = st.file_uploader(
+            "Upload reference documents (PDF, TXT, MD)",
+            type=["pdf", "txt", "md"],
+            label_visibility="collapsed",
+        )
         if uploaded_file:
             from config.settings import get_settings
             settings = get_settings()
@@ -273,30 +472,45 @@ def _render_sidebar(workflow) -> None:
                     except Exception as e:
                         logger.error(f"Failed to add document to vector store: {e}")
                         
-                st.success(f"Uploaded: {uploaded_file.name}")
+                st.success(f"Indexed: {uploaded_file.name}")
         
         st.divider()
 
-        # 2. Health report (System Status)
+        # 2. System Status / Agent Health
         if workflow is not None:
-            st.markdown("#### System Status")
+            st.markdown('<div class="m3-card-title">⚡ Multi-Agent Health</div>', unsafe_allow_html=True)
             health = workflow.health_report()
+            status_html = '<div class="m3-sidebar-card">'
             for name, ok in health.items():
-                icon = "🟢" if ok else "🔴"
-                css = "health-ok" if ok else "health-fail"
-                st.markdown(
-                    f'{icon} &nbsp;<span class="{css}">{name}</span>',
-                    unsafe_allow_html=True,
-                )
+                status_cls = "m3-status-ok" if ok else "m3-status-err"
+                status_text = "Ready" if ok else "Offline"
+                status_icon = "●" if ok else "▲"
+                status_html += f"""
+                <div class="m3-status-item">
+                    <span>{name} Agent</span>
+                    <span class="m3-status-pill {status_cls}">{status_icon} {status_text}</span>
+                </div>
+                """
+            status_html += '</div>'
+            st.markdown(status_html, unsafe_allow_html=True)
             st.divider()
 
-        # 3. Session ID and Actions
+        # 3. Session & Actions
+        st.markdown('<div class="m3-card-title">🛠️ Session & Storage</div>', unsafe_allow_html=True)
         thread_id = st.session_state.get("thread_id", "unknown")
-        st.markdown(f"**Session ID:** `{thread_id[:8]}`")
+        st.markdown(
+            f"""
+            <div style="display:flex; justify-content:space-between; align-items:center; background: var(--md-surface-container); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--md-outline-variant); margin-bottom: 12px; font-size: 0.8rem;">
+                <span style="color: var(--md-on-surface-variant);">Session Key</span>
+                <code style="background: transparent; color: var(--md-primary); font-family: 'JetBrains Mono', monospace;">{thread_id[:8]}</code>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("🗑️ Clear", use_container_width=True, key="clear_chat"):
+            if st.button("🗑️ Reset", use_container_width=True, key="clear_chat"):
                 # Delete uploaded files
                 for file_path in st.session_state.get("uploaded_files", []):
                     try:
@@ -318,16 +532,20 @@ def _render_sidebar(workflow) -> None:
 
         st.divider()
 
-        st.caption(
-            f"Messages: {len(st.session_state.messages)} &nbsp;•&nbsp; "
-            f"Model: Gemma 4"
+        st.markdown(
+            f"""
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color: var(--md-on-surface-variant);">
+                <span>Messages: {len(st.session_state.messages)}</span>
+                <span>Model: Gemma 4</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
 
 
 def _export_chat() -> None:
     """Export chat history as JSON."""
     if not st.session_state.messages:
-        # Replaced sidebar warning with a disabled-looking button for better UX
         st.button("📥 Export", disabled=True, use_container_width=True)
         return
     
@@ -346,20 +564,28 @@ def _export_chat() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Source badges
+# Source badges (Material 3 Assist Chips)
 # ---------------------------------------------------------------------------
 def _render_source_badges(sources: list[str]) -> None:
     if not sources:
         return
-    badges_html = ""
+    badges_html = '<div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;">'
+    icon_map = {
+        "RAG": "📄",
+        "Arxiv": "📑",
+        "Wikipedia": "🌐",
+        "Tavily": "🔍",
+    }
     for src in sources:
         css_cls = {
-            "RAG": "badge-rag",
-            "Arxiv": "badge-arxiv",
-            "Wikipedia": "badge-wikipedia",
-            "Tavily": "badge-tavily",
-        }.get(src, "badge-rag")
-        badges_html += f'<span class="source-badge {css_cls}">{src}</span>'
+            "RAG": "m3-badge-rag",
+            "Arxiv": "m3-badge-arxiv",
+            "Wikipedia": "m3-badge-wikipedia",
+            "Tavily": "m3-badge-tavily",
+        }.get(src, "m3-badge-rag")
+        icon = icon_map.get(src, "💡")
+        badges_html += f'<span class="m3-source-badge {css_cls}"><span>{icon}</span> {src}</span>'
+    badges_html += '</div>'
     st.markdown(badges_html, unsafe_allow_html=True)
 
 
@@ -370,7 +596,7 @@ def _stream_text(text: str):
     """Yield words one at a time with a small delay for streaming effect."""
     for word in text.split(" "):
         yield word + " "
-        time.sleep(0.02) # Slightly faster generation feels more responsive
+        time.sleep(0.018)
 
 
 # ---------------------------------------------------------------------------
@@ -393,12 +619,26 @@ def main() -> None:
     st.session_state.workflow = workflow
     _render_sidebar(workflow)
 
-    # Header
-    st.markdown('<div class="main-header">SynthMind</div>', unsafe_allow_html=True)
+    # Header Hero (Material 3)
     st.markdown(
-        '<div class="sub-header">'
-        'Powered by RAG • arXiv • Wikipedia • Tavily'
-        '</div>',
+        """
+        <div style="text-align: center; margin-top: 0.5rem;">
+            <div class="m3-hero-badge">
+                <span class="pulse-dot"></span>
+                <span>Material 3 • Multi-Agent System</span>
+            </div>
+            <div class="m3-main-title">SynthMind</div>
+            <div class="m3-sub-title">
+                Autonomous multi-agent research assistant routing queries across textbooks, arXiv preprints, Wikipedia, and live search.
+            </div>
+            <div class="m3-chip-row">
+                <span class="m3-chip"><span class="m3-badge-rag" style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:2px;"></span> RAG Textbooks</span>
+                <span class="m3-chip"><span class="m3-badge-arxiv" style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:2px;"></span> arXiv Papers</span>
+                <span class="m3-chip"><span class="m3-badge-wikipedia" style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:2px;"></span> Wikipedia</span>
+                <span class="m3-chip"><span class="m3-badge-tavily" style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:2px;"></span> Tavily Search</span>
+            </div>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
 
