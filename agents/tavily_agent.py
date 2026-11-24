@@ -31,11 +31,16 @@ class TavilyAgent(BaseAgent):
     def __init__(self, llm, *, max_results: int = 3) -> None:
         self._llm = llm
         self._max_results = max_results
-        self._agent = self._build_agent()
+        settings = get_settings()
+        self._has_key = bool(settings.app.tavily_api_key and settings.app.tavily_api_key.strip())
+        self._agent = self._build_agent() if self._has_key else None
 
     @property
     def name(self) -> str:
         return "Tavily"
+
+    def health_check(self) -> bool:
+        return self._has_key
 
     def _build_agent(self):
         settings = get_settings()
@@ -65,6 +70,12 @@ class TavilyAgent(BaseAgent):
         Raises:
             AgentError: If the Tavily query fails.
         """
+        if not self._has_key or self._agent is None:
+            return AgentOutput(
+                source="Tavily",
+                result="Tavily live search is not configured. Add a TAVILY_API_KEY to your .env file to enable web search.",
+            )
+
         try:
             result = self._agent.invoke(
                 {"messages": [{"role": "user", "content": query}]}
