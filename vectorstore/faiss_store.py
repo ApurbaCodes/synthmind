@@ -14,9 +14,7 @@ SOLID:
 
 from __future__ import annotations
 
-import json
 import logging
-import os
 import threading
 from datetime import datetime, timezone
 from pathlib import Path
@@ -227,7 +225,6 @@ class FAISSManager:
         if not self._documents_dir.exists():
             self._documents_dir.mkdir(parents=True, exist_ok=True)
             logger.info("Created documents directory: %s", self._documents_dir)
-            return
 
         doc_files = []
         for ext in ["*.pdf", "*.txt", "*.md"]:
@@ -247,9 +244,7 @@ class FAISSManager:
         new_docs = [p for p in doc_files if str(p) not in processed]
 
         if new_docs:
-            # Release lock before add_documents (it re-acquires)
-            # ... actually we call it within load_or_create which holds the lock,
-            # so we do the inline version here.
+            # Inline document chunking and indexing while holding lock
             all_chunks: List[Document] = []
             pf: Dict[str, str] = self._manifest.get("processed_files", {})
 

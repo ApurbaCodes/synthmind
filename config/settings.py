@@ -10,7 +10,6 @@ SOLID: Single Responsibility — this module's only job is config validation/loa
 from __future__ import annotations
 
 import logging
-import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional

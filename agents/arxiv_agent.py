@@ -1,7 +1,6 @@
 """
 Arxiv Agent — searches academic papers on arXiv.
 
-Extracted from the monolithic ``other_agents.py`` into its own module.
 Uses the modern ``langchain.agents.create_agent`` API.
 
 SOLID:

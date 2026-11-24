@@ -21,7 +21,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import OllamaEmbeddings
 
 from config.settings import Settings, get_settings
-from core.exceptions import ConfigurationError, LLMError
+from core.exceptions import LLMError
 
 logger = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@ LangGraph Workflow Builder — constructs the multi-agent state graph.
 
 DSA Highlight:
     The workflow is a Directed Acyclic Graph (DAG):
-        START → classify → [RAG | Arxiv | Wikipedia] → synthesize → END
+        START → classify → [RAG | Arxiv | Wikipedia | Tavily] → synthesize → END
 
     Conditional edges allow fan-out to parallel agent execution —
     graph topology is determined at runtime by the router's classification.

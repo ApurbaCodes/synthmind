@@ -532,11 +532,13 @@ def _render_sidebar(workflow) -> None:
 
         st.divider()
 
+        from config.settings import get_settings
+        model_name = get_settings().llm.chat_model
         st.markdown(
             f"""
             <div style="display:flex; justify-content:space-between; font-size:0.75rem; color: var(--md-on-surface-variant);">
                 <span>Messages: {len(st.session_state.messages)}</span>
-                <span>Model: Gemma 4</span>
+                <span>Model: {model_name}</span>
             </div>
             """,
             unsafe_allow_html=True,
