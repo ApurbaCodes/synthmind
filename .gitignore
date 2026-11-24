@@ -34,4 +34,6 @@ Thumbs.db
 *.docx
 update_docx.py
 *.pdf
+*.docx
+*.md
 
